@@ -17,12 +17,14 @@ pattern_dict: dict[str, str] = {
     "nine": "9",
 }
 
+pattern_set = set(pattern_dict)
 
-def is_digit_in_string(input_str: str) -> Union[str, bool]:
-    for pattern, number in pattern_dict.items():
+
+def is_digit_in_string(input_str: str) -> Union[str, None]:
+    for pattern in pattern_set:
         if pattern in input_str:
-            return number
-    return False
+            return pattern_dict[pattern]
+    return None
 
 
 def extract_first_left_digit(input_string: str) -> Union[str, None]:
@@ -63,5 +65,5 @@ def main(input: list[str]):
         relevant_digits.append(total_digits)
     print(sum(relevant_digits))  # Print the individual total_digits, not the list
 
-main(X)
 
+main(X)
