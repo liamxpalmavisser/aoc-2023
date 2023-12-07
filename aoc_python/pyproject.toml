@@ -8,6 +8,8 @@ packages = [{include = "aoc_python"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+mypy = "^1.7.1"
+black = "^23.11.0"
 
 
 [build-system]
