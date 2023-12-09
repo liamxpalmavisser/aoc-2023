@@ -11,11 +11,26 @@ class Color:
 class Set:
     colors: list[Color]
 
+    def to_dict(self):
+        return {color.name: color.value for color in self.colors}
+
 
 @dataclass
 class Game:
     id: int
     sets: list[Set]
+
+    def get_largest_set(self) -> dict:
+        return {
+            color: max(
+                set_instance.to_dict().get(color, 0) for set_instance in self.sets
+            )
+            for color in {
+                color.name
+                for set_instance in self.sets
+                for color in set_instance.colors
+            }
+        }
 
 
 def parse_color(color_str):
@@ -37,32 +52,44 @@ def parse_game(game_str):
     return Game(game, sets)
 
 
-def is_set_too_big(max_set: list[Color], set2: list[Color]) -> bool:
+def power(largest_color: dict) -> int:
+    power = 1
+    for n_cubes in largest_color.values():
+        power *= n_cubes
+
+    return power
+
+
+def is_set_playable(max_set: list[Color], set2: Set) -> bool:
     max_color_dict = {color.name: color.value for color in max_set}
-    set_color_dict = {color.name: color.value for color in set2}
+    set_color_dict = set2.to_dict()
 
-    for color, count in set_color_dict.items():
-        if count > max_color_dict[color]:
-            return True
-    return False
+    return all(
+        count <= max_color_dict.get(color, 0) for color, count in set_color_dict.items()
+    )
 
 
-with open("inputs/day02.txt", "r") as file:
-    lines = file.readlines()
-    print(lines)
+def part_one(lines):
     games = [parse_game(line) for line in lines]
+    playable_games = 0
+    max_set = [Color("red", 12), Color("green", 13), Color("blue", 14)]
+    for game in games:
+        if all(is_set_playable(max_set, set_instance) for set_instance in game.sets):
+            playable_games += int(game.id)
+    print(playable_games)
+
+
+def part_two(lines):
+    games = [parse_game(line) for line in lines]
+    power_sum = sum(power(game.get_largest_set()) for game in games)
+    print(power_sum)
 
 
 def main():
-    oversized_games = 0
-    for game in games:
-        max_set = [Color("red", 12), Color("green", 13), Color("blue", 14)]
-        for setje in game.sets:
-            if is_set_too_big(max_set, setje.colors):
-                oversized_games += int(game.id)
-                break
+    with open("inputs/day02.txt", "r") as file:
+        lines = file.readlines()
 
-    print(oversized_games)
+    part_one(lines)
 
 
 if __name__ == "__main__":
