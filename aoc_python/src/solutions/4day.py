@@ -62,7 +62,6 @@ def part_two(lines):
     print(total_cards)
 
 
-
 def main():
     part_two(X)
 
