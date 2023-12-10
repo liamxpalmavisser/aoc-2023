@@ -23,14 +23,14 @@ def parse_nodes(lines) -> dict[str, Node]:
 
 
 def traverse_node(
-    sequence: str, nodes: dict[str, Node], start_node: str, part: int) -> tuple[int, str]:
+    sequence: str, nodes: dict[str, Node], start_node: str, part: int
+) -> tuple[int, str]:
     current_node = start_node
     for n_char, char in enumerate(sequence):
         current_node = getattr(nodes[current_node], char)
 
         if current_node.endswith("ZZZ" if part == 1 else "Z"):
             return n_char + 1, current_node
-
 
     return n_char + 1, current_node
 
