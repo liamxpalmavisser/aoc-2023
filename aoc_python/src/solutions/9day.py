@@ -1,4 +1,3 @@
-from itertools import islice
 from dataclasses import dataclass
 
 
