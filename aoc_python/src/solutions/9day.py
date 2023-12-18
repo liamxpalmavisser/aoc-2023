@@ -1,6 +1,3 @@
-from dataclasses import dataclass
-
-
 def parse(line: str) -> list[int]:
     line = line.strip()
     characters = line.split(" ")

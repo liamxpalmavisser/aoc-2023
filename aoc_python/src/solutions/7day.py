@@ -52,7 +52,6 @@ class Hand:
             else:
                 self.card_dict[card] += 1
 
-
     def check_type(self):
         if len(set(self.cards)) == 1:
             self.type = 6

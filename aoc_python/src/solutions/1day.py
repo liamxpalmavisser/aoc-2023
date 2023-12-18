@@ -1,4 +1,3 @@
-from types import resolve_bases
 from typing import Union
 
 with open("inputs/day01.txt", "r") as file:
