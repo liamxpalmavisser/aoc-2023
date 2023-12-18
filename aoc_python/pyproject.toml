@@ -10,6 +10,8 @@ packages = [{include = "aoc_python"}]
 python = "^3.10"
 mypy = "^1.7.1"
 black = "^23.11.0"
+tqdm = "^4.66.1"
+numpy = "^1.26.2"
 
 
 [build-system]
